@@ -79,7 +79,7 @@ function showStartScreen() {
 }
 
 // =========================
-// STARTボタンクリック
+// STARTボタンクリック（PC）
 // =========================
 canvas.addEventListener("click", function (e) {
     const rect = canvas.getBoundingClientRect();
@@ -103,6 +103,34 @@ canvas.addEventListener("click", function (e) {
         }
     }
 });
+
+// =========================
+// STARTボタン（スマホタッチ）
+// =========================
+canvas.addEventListener("touchstart", function (e) {
+    const rect = canvas.getBoundingClientRect();
+    const touchX = e.touches[0].clientX - rect.left;
+    const touchY = e.touches[0].clientY - rect.top;
+
+    if (!gameStarted && !gameOver) {
+        if (touchX > 100 && touchX < 300 && touchY > 450 && touchY < 530) {
+            startGame();
+            e.preventDefault();
+            return;
+        }
+    }
+
+    if (gameOver) {
+        if (touchX > 100 && touchX < 300 && touchY > 450 && touchY < 530) {
+            bgmEndGood.pause();
+            bgmEndNormal.pause();
+            bgmEndBad.pause();
+            startGame();
+            e.preventDefault();
+            return;
+        }
+    }
+}, { passive: false });
 
 // =========================
 // ゲーム開始
@@ -164,7 +192,7 @@ const endingImages = {
 };
 
 // =========================
-– アイテム生成
+// アイテム生成
 // =========================
 function spawnItem() {
     if (!gameStarted || gameOver) return;
@@ -218,18 +246,19 @@ document.addEventListener("keydown", (e) => {
 });
 
 // =========================
-// ★ スマホ用タッチ操作（ふんわり移動）
+// ★ スマホ用タッチ操作（PCと干渉しない）
 // =========================
-canvas.addEventListener("touchstart", handleTouch);
-canvas.addEventListener("touchmove", handleTouch);
+canvas.addEventListener("touchmove", handleTouch, { passive: false });
+canvas.addEventListener("touchstart", handleTouch, { passive: false });
 
 function handleTouch(e) {
     if (!gameStarted || gameOver) return;
+    if (e.touches.length === 0) return;
 
     const rect = canvas.getBoundingClientRect();
     const touchX = e.touches[0].clientX - rect.left;
 
-    const move = 8; // ← ふんわり動くおすすめ値
+    const move = 8; // ← ふんわり動く値
 
     if (touchX < canvas.width / 2) {
         player.x = Math.max(0, player.x - move);
