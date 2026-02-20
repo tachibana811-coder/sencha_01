@@ -41,7 +41,6 @@ seBad.volume = 0.4;
 function drawRoundButton(x, y, w, h, text) {
     const radius = h / 2;
 
-    // ボタン背景
     ctx.fillStyle = "#ffffffdd";
     ctx.beginPath();
     ctx.moveTo(x + radius, y);
@@ -55,12 +54,10 @@ function drawRoundButton(x, y, w, h, text) {
     ctx.quadraticCurveTo(x, y, x + radius, y);
     ctx.fill();
 
-    // ピンクの縁取り
     ctx.strokeStyle = "#ff88aa";
     ctx.lineWidth = 4;
     ctx.stroke();
 
-    // テキスト
     ctx.fillStyle = "#333";
     ctx.font = "28px sans-serif";
     ctx.textAlign = "center";
@@ -77,8 +74,6 @@ function showStartScreen() {
 
     startImage.onload = function () {
         ctx.drawImage(startImage, 0, 0, canvas.width, canvas.height);
-
-        // 丸スタートボタン
         drawRoundButton(100, 450, 200, 80, "START");
     };
 }
@@ -91,7 +86,6 @@ canvas.addEventListener("click", function (e) {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    // スタートボタン
     if (!gameStarted && !gameOver) {
         if (x > 100 && x < 300 && y > 450 && y < 530) {
             startGame();
@@ -99,7 +93,6 @@ canvas.addEventListener("click", function (e) {
         }
     }
 
-    // エンディングの「もう一度プレイ」
     if (gameOver) {
         if (x > 100 && x < 300 && y > 450 && y < 530) {
             bgmEndGood.pause();
@@ -151,7 +144,7 @@ let player = { x: 180, y: 520, width: 60, height: 60 };
 const itemImages = {
     normal: [
         "images/item_normal1.png",
-        "images/item_normal2.png", // クッキー
+        "images/item_normal2.png",
         "images/item_normal3.png"
     ],
     special: ["images/item_special.png"],
@@ -211,7 +204,7 @@ function applyEffect(type) {
 }
 
 // =========================
-// 操作
+// 操作（PC用）
 // =========================
 document.addEventListener("keydown", (e) => {
     if (!gameStarted || gameOver) return;
@@ -225,7 +218,7 @@ document.addEventListener("keydown", (e) => {
 });
 
 // =========================
-// スマホ用タッチ操作
+// ★ スマホ用タッチ操作
 // =========================
 canvas.addEventListener("touchstart", handleTouch);
 canvas.addEventListener("touchmove", handleTouch);
@@ -237,10 +230,8 @@ function handleTouch(e) {
     const touchX = e.touches[0].clientX - rect.left;
 
     if (touchX < canvas.width / 2) {
-        // 左半分タッチ → 左へ
         player.x = Math.max(0, player.x - 20);
     } else {
-        // 右半分タッチ → 右へ
         player.x = Math.min(canvas.width - player.width, player.x + 20);
     }
 
@@ -255,11 +246,9 @@ function update() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // ピンクフィルター
     ctx.fillStyle = "rgba(255, 180, 200, 0.25)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // プレイヤー
     ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
 
     if (effectTimer > 0) {
@@ -335,7 +324,6 @@ function endGame() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(endImg, 0, 0, canvas.width, canvas.height);
 
-        // ★ 丸い「もう一度プレイ」ボタン
         drawRoundButton(100, 450, 200, 80, "もう一度プレイ");
     };
 }
