@@ -164,7 +164,7 @@ const endingImages = {
 };
 
 // =========================
-// アイテム生成
+– アイテム生成
 // =========================
 function spawnItem() {
     if (!gameStarted || gameOver) return;
@@ -218,7 +218,7 @@ document.addEventListener("keydown", (e) => {
 });
 
 // =========================
-// ★ スマホ用タッチ操作
+// ★ スマホ用タッチ操作（ふんわり移動）
 // =========================
 canvas.addEventListener("touchstart", handleTouch);
 canvas.addEventListener("touchmove", handleTouch);
@@ -229,10 +229,12 @@ function handleTouch(e) {
     const rect = canvas.getBoundingClientRect();
     const touchX = e.touches[0].clientX - rect.left;
 
+    const move = 8; // ← ふんわり動くおすすめ値
+
     if (touchX < canvas.width / 2) {
-        player.x = Math.max(0, player.x - 20);
+        player.x = Math.max(0, player.x - move);
     } else {
-        player.x = Math.min(canvas.width - player.width, player.x + 20);
+        player.x = Math.min(canvas.width - player.width, player.x + move);
     }
 
     e.preventDefault();
