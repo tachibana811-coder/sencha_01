@@ -225,6 +225,29 @@ document.addEventListener("keydown", (e) => {
 });
 
 // =========================
+// スマホ用タッチ操作
+// =========================
+canvas.addEventListener("touchstart", handleTouch);
+canvas.addEventListener("touchmove", handleTouch);
+
+function handleTouch(e) {
+    if (!gameStarted || gameOver) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const touchX = e.touches[0].clientX - rect.left;
+
+    if (touchX < canvas.width / 2) {
+        // 左半分タッチ → 左へ
+        player.x = Math.max(0, player.x - 20);
+    } else {
+        // 右半分タッチ → 右へ
+        player.x = Math.min(canvas.width - player.width, player.x + 20);
+    }
+
+    e.preventDefault();
+}
+
+// =========================
 // ゲームループ
 // =========================
 function update() {
