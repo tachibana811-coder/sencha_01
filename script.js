@@ -238,10 +238,10 @@ document.addEventListener("keydown", (e) => {
     if (!gameStarted || gameOver) return;
 
     if (e.key === "ArrowLeft") {
-        player.x = Math.max(0, player.x - 20);
+        player.x = Math.max(0, player.x - 30);
     }
     if (e.key === "ArrowRight") {
-        player.x = Math.min(canvas.width - player.width, player.x + 20);
+        player.x = Math.min(canvas.width - player.width, player.x + 30);
     }
 });
 
