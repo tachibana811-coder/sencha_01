@@ -1,12 +1,23 @@
+/* 画面全体の背景 */
 body {
-margin: 0;
-background: #f7e9e3;
-display: flex;
-justify-content: center;
+    margin: 0;
+    padding: 0;
+    background-color: #ffeef4; /* ふんわりピンク */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
+/* ★ スマホで縮まないように固定サイズにする */
 canvas {
     width: 400px;
     height: 600px;
+
+    /* スマホのスワイプ誤作動を防ぐ */
     touch-action: none;
+
+    /* 影をつけて可愛く */
+    box-shadow: 0 0 15px rgba(255, 150, 180, 0.4);
+    border-radius: 10px;
 }
